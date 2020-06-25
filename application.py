@@ -5,6 +5,7 @@ from flask import Flask, session
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from flask import render_template, url_for, flash, redirect, request, abort
 
 # goodread key: vfTYhqGEGd0ajlUm2JQ8A
 # goodread secret: CvaXaTGKgjtGT5SindIjfdlFYGT8kaqTZwfe5pNq7I
@@ -29,12 +30,9 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    return "Project 1: TODO"
+    return render_template("register.html", title="Register Page")
 
 
-@app.route("/register")
-def index():
-    return "Project 1: TODO"
 
 
 if __name__ == "__main__":
