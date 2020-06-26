@@ -1,5 +1,4 @@
 virtual_env
 .bash_profile
 .DS_Store
-__pycache__
-flask_session
+__pycache__/
