@@ -1,0 +1,28 @@
+.box_color {
+  background-color: rgb(252, 200, 103);
+}
+
+.text_color {
+  color: rgb(16, 55, 99);
+}
+
+.button_color {
+  background-color: rgb(44, 90, 143);
+  color:  rgb(248, 174, 37);
+}
+
+.head_font {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.flash_text {
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: rgb(187, 29, 29);
+}
+
+.flash_box {
+  background-color: rgb(165, 182, 201);
+  border-color: rgb(248, 174, 37) ;
+  border-radius: 6px;
+}
