@@ -1,7 +1,15 @@
 {% extends "layout.html" %}
 
 {% block banner %}
-<img src="{{ url_for('static', filename='book.png') }}" class="img-fluid" alt="..">
+  <div class="container-fluid pt-2 pb-2 bar">
+    <div class="row">
+      <div class="col-md-11">
+      </div>
+      <div class="col-md-1">
+        <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block blogContent %}
