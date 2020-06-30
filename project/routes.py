@@ -55,8 +55,12 @@ def index():
     isbn_list = Book.query.filter(Book.isbn.like("%" + input_isbn + "%")).all()
     author_list = Book.query.filter(Book.author.like("%" + input_author.title() + "%")).all()
     books = list(set(title_list).intersection(set(isbn_list), set(author_list)))
-    return render_template("results.html", title="Search Results", books=books, form=form)
+    if books:
+      return render_template("results.html", title="Search Results", books=books, form=form)
+    else:
+      books = Book.query.filter(Book.title.like("%" + input_title.title() + "%")).limit(5).all()
+      return render_template("results.html", title="Book Search", books=books, form=form)
   else:
-    recommendations = Book.query.filter(Book.year > 2016).limit(3).all()
-    return render_template("index.html", title="Book Search", recommendations=recommendations, form=form)
+    books = Book.query.filter(Book.year > 2016).limit(3).all()
+    return render_template("index.html", title="Book Search", books=books, form=form)
 

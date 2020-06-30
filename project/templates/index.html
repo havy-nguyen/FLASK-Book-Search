@@ -92,9 +92,9 @@
     <div class="col-md-6 border mt-4 pt-2 pb-2 mb-4 result">
       <h4 class="border-bottom mb-4 pt-3">Most recent books:</h4>
       <ul style="padding-left: 160px;" class="pt-4">
-        {% for recommendation in recommendations %}
+        {% for book in books %}
         <li>
-        <h5><a href="#">{{ recommendation.title }}</a></h5><h6>(by {{ recommendation.author }})</h6><br>
+        <h5><a href="#">{{ book.title }}</a></h5><h6>(by {{ book.author }})</h6><br>
         </li>
         {% endfor %}
       </ul>
