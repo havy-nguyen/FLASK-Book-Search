@@ -30,3 +30,10 @@
 .bar {
   background-color: rgb(248, 174, 37);
 }
+
+.result {
+  background-color: rgba(196, 208, 214, 0.993);
+  border-radius: 15px;
+  padding-left: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}

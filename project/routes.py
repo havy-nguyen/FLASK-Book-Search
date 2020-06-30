@@ -1,7 +1,7 @@
 import os
 import requests
-from project.forms import RegistrationForm, LoginForm
-from project.models import User
+from project.forms import RegistrationForm, LoginForm, SearchForm
+from project.models import User, Book
 from flask_sqlalchemy import SQLAlchemy
 from project import app, db, bcrypt
 from flask import render_template, url_for, flash, redirect, request, abort
@@ -43,7 +43,20 @@ def logout():
   return redirect(url_for('login'))
 
 
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-  return render_template("index.html", title="Book Search")
+  form = SearchForm()
+  input_isbn = str(form.isbn.data)
+  input_title = str(form.title.data)
+  input_author = str(form.author.data)
+  if form.validate_on_submit():
+    title_list = Book.query.filter(Book.title.like("%" + input_title.title() + "%")).all()
+    isbn_list = Book.query.filter(Book.isbn.like("%" + input_isbn + "%")).all()
+    author_list = Book.query.filter(Book.author.like("%" + input_author.title() + "%")).all()
+    books = list(set(title_list).intersection(set(isbn_list), set(author_list)))
+    return render_template("results.html", title="Search Results", books=books, form=form)
+  else:
+    recommendations = Book.query.filter(Book.year > 2016).limit(3).all()
+    return render_template("index.html", title="Book Search", recommendations=recommendations, form=form)
+

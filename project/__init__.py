@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from email_validator import *
 from flask_login import LoginManager
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 app = Flask(__name__)
@@ -13,8 +15,13 @@ app = Flask(__name__)
 if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATABASE_URL is not set")
 
+# Bind engine to perform query
+engine = create_engine(os.getenv("DATABASE_URL"))
+database = scoped_session(sessionmaker(bind=engine))
+
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config['SECRET_KEY'] = "cff2150872a5e6d41b0c019021cc31fa38a2e86"
 Session(app)

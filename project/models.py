@@ -17,3 +17,14 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
+
+
+class Book(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    isbn = db.Column(db.String(30), nullable=False)
+    title = db.Column(db.String(150), nullable=False)
+    author = db.Column(db.String(120), nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f"Book('{self.id}', '{self.isbn}', '{self.title}', '{self.author}', '{self.year}')"
