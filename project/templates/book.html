@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block banner %}
+  <div class="container-fluid pt-2 pb-2 bar">
+    <div class="row">
+      <div class="col-md-11">
+      </div>
+      <div class="col-md-1">
+        <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block blogContent %}
+<div class="container">
+  <div class="row mt-5">
+    <div class="col"></div>
+    <div class="col-10">
+      <div class="mb-3 card border-info">
+        <img src="{{ url_for('static', filename='book.png') }}" class="card-img-top" alt="..." width="200" height="60">
+        <div class="card-body">
+          <div class="media">
+            <img src="{{ url_for('static', filename='picture.png') }}" class="align-self-center mr-3" alt="..." width="180">
+            <div class="media-body" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+              <h2 class="mt-2 mb-3 pt-3 border-bottom" style="padding-left: 30px;">{{ book.title }}</h2>
+              <div class="container mt-5 pb-2">
+                <div class="row">
+                  <div class="col-6">
+                    <ul class="list-group list-group-flush" style="font-size: medium; font-weight: bold;">
+                      <li class="list-group-item">Author:</li>
+                      <li class="list-group-item">ISBN:</li>
+                      <li class="list-group-item">Published year:</li>
+                    </ul>
+                  </div>
+                  <div class="col-6">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">{{ book.author }}</li>
+                      <li class="list-group-item">{{ book.isbn }}</li>
+                      <li class="list-group-item">{{ book.year }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-5">
+      2 of 3 (wider)
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col"></div>
+  <div class="col-5">
+    2 of 3 (wider)
+  </div>
+  <div class="col"></div>
+</div>
+</div>
+{% endblock blogContent %}
+
+
+{% block bottom %}
+<div class="container-fluid pt-2 pb-2 button_color footer">
+  <div style="width:500px; height:50px;"></div>
+</div>
+{% endblock %}

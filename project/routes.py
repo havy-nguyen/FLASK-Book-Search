@@ -4,6 +4,7 @@ from project.forms import RegistrationForm, LoginForm, SearchForm
 from project.models import User, Book
 from flask_sqlalchemy import SQLAlchemy
 from project import app, db, bcrypt
+from sqlalchemy import and_
 from flask import render_template, url_for, flash, redirect, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -51,16 +52,27 @@ def index():
   input_title = str(form.title.data)
   input_author = str(form.author.data)
   if form.validate_on_submit():
-    title_list = Book.query.filter(Book.title.like("%" + input_title.title() + "%")).all()
-    isbn_list = Book.query.filter(Book.isbn.like("%" + input_isbn + "%")).all()
-    author_list = Book.query.filter(Book.author.like("%" + input_author.title() + "%")).all()
-    books = list(set(title_list).intersection(set(isbn_list), set(author_list)))
-    if books:
+    books = Book.query.filter(and_(Book.isbn.like("%" + input_isbn + "%"), 
+                                  Book.title.like("%" + input_title.title() + "%"), 
+                                  Book.author.like("%" + input_author.title() + "%"))).all()
+    if len(books) != 5000:
       return render_template("results.html", title="Search Results", books=books, form=form)
     else:
-      books = Book.query.filter(Book.title.like("%" + input_title.title() + "%")).limit(5).all()
+      books = []
+      flash('You must fill in at least one field.', 'danger')
       return render_template("results.html", title="Book Search", books=books, form=form)
   else:
     books = Book.query.filter(Book.year > 2016).limit(3).all()
     return render_template("index.html", title="Book Search", books=books, form=form)
+
+
+@app.route("/index/<int:id>")
+@login_required
+def book(id):
+  book = Book.query.get_or_404(id)
+  return render_template('book.html', title=book.title, book=book)
+
+
+
+
 

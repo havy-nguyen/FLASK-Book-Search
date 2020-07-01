@@ -40,14 +40,11 @@ class LoginForm(FlaskForm):
 
 class SearchForm(FlaskForm):
   isbn = StringField("Isbn", validators=[Length(max=30)])
-  title = StringField("Title", validators=[DataRequired(), Length(max=150)])
+  title = StringField("Title", validators=[Length(max=150)])
   author = StringField("Author", validators=[Length(max=120)])
   submit = SubmitField("Search")
 
-  def validate_title(self, title):
-    title = Book.query.filter(Book.title.like("%" + title.data.title() + "%")).first()
-    if not title:
-      raise ValidationError("Please try another title!")
+
 
 
 

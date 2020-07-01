@@ -24,7 +24,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config['SECRET_KEY'] = "cff2150872a5e6d41b0c019021cc31fa38a2e86"
-Session(app)
+ss = Session(app)
 
 # Set up database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL')

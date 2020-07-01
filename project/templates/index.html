@@ -13,22 +13,6 @@
 {% endblock %}
 
 {% block blogContent %}
-<div class="container-fluid mt-3">
-  <div class="row">
-    <div class="col">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }} flash_box flash_text rounded">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-      {% endwith %}
-    </div>
-  </div>
-</div>
-
 <div class="container mt-4 mb-5">
   <div class="row">
     <div class="col border-left border-right box_color pb-2 pt-3 rounded">
@@ -86,6 +70,22 @@
   </div>
 </div>
 
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} flash_box flash_text rounded">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="col-md-3"></div>
@@ -93,9 +93,9 @@
       <h4 class="border-bottom mb-4 pt-3">Most recent books:</h4>
       <ul style="padding-left: 160px;" class="pt-4">
         {% for book in books %}
-        <li>
-        <h5><a href="#">{{ book.title }}</a></h5><h6>(by {{ book.author }})</h6><br>
-        </li>
+          <li>
+          <h5><a href="{{ url_for('book', id=book.id) }}">{{ book.title }}</a></h5><h6>(by {{ book.author }})</h6><br>
+          </li>
         {% endfor %}
       </ul>
     </div>
