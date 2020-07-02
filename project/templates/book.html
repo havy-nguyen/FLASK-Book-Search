@@ -51,25 +51,78 @@
     </div>
   </div>
 
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <div class="col">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} flash_box flash_text rounded">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col"></div>
-    <div class="col-5">
-      2 of 3 (wider)
+    <div class="col-8">
+      <!-- ------FORM---------- -->
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+      <fieldset class="form-group mt-5">
+        <legend class="border-bottom mb-4 head_font">Like this book?</legend>
+        <div class="form-group">
+            {{ form.content.label(class="form-control-label") }}
+            {% if form.content.errors %}
+              {{ form.content(class="form-control form-control-md is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.content.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.content(class="form-control form-control-md") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-outline-secondary button_color") }}
+        </div>
+      </fieldset>
+      </form>
+      <!-- ---------FORM----------- -->
+    </div>
+    <div class="col"></div>
+  </div>
+  </div>
+
+  <div class="row mt-5 mb-5">
+    <div class="col"></div>
+    <div class="col-8">
+      <!-- -----REVIEW------- -->
+      {% for review in reviews %}
+      <div class="mb-3">
+        <div class="card-body review_content">
+          <div class="review_head pl-4 pt-1">
+            {{ review.reviewer.username }}:
+          </div>
+          <blockquote class="blockquote mb-0 pt-3">
+            <p>{{ review.content }}</p>
+            <footer class="blockquote-footer"><small class="text-muted"><cite title="Source Title">Reviewed on: {{ review.date.strftime('%d-%m-%Y') }}</cite></small></footer>
+          </blockquote>
+        </div>
+      </div>
+      {% endfor %}
+      <!-- --------REVIEW-------- -->
     </div>
     <div class="col"></div>
   </div>
 </div>
-
-<div class="row">
-  <div class="col"></div>
-  <div class="col-5">
-    2 of 3 (wider)
-  </div>
-  <div class="col"></div>
-</div>
-</div>
 {% endblock blogContent %}
-
+          
 
 {% block bottom %}
 <div class="container-fluid pt-2 pb-2 button_color footer">

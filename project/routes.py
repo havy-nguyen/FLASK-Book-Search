@@ -1,7 +1,7 @@
 import os
 import requests
-from project.forms import RegistrationForm, LoginForm, SearchForm
-from project.models import User, Book
+from project.forms import RegistrationForm, LoginForm, SearchForm, ReviewForm
+from project.models import User, Book, Review
 from flask_sqlalchemy import SQLAlchemy
 from project import app, db, bcrypt
 from sqlalchemy import and_
@@ -66,11 +66,22 @@ def index():
     return render_template("index.html", title="Book Search", books=books, form=form)
 
 
-@app.route("/index/<int:id>")
+@app.route("/index/<int:id>",  methods=['GET', 'POST'])
 @login_required
 def book(id):
   book = Book.query.get_or_404(id)
-  return render_template('book.html', title=book.title, book=book)
+  reviews = Review.query.join(Book).filter(Book.id == book.id).order_by(Review.id.desc()).all()
+  form = ReviewForm()
+  if form.validate_on_submit():
+    review = Review(content=form.content.data, reviewer=current_user, book=book) 
+    flash("Your review has been added", 'danger')
+    db.session.add(review)
+    db.session.commit()
+    return redirect(url_for('book', id=book.id))
+  return render_template('book.html', title=book.title, book=book, form=form, reviews=reviews)
+
+
+
 
 
 

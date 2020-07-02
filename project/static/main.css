@@ -44,4 +44,18 @@
   bottom: 0;
 }
 
+.review_head {
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 5px;
+  background-color: rgb(253, 203, 109);
+  height: 25px;
+  font-size: smaller;
+}
+
+.review_content {
+  font-family: monospace;
+  border-radius: 30px;
+  background-color: rgb(241, 241, 240);
+}
+
 

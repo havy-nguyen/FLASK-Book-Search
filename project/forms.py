@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from project.models import User, Book
+from project.models import User, Book, Review
 
 
 class RegistrationForm(FlaskForm):
@@ -43,6 +43,11 @@ class SearchForm(FlaskForm):
   title = StringField("Title", validators=[Length(max=150)])
   author = StringField("Author", validators=[Length(max=120)])
   submit = SubmitField("Search")
+
+
+class ReviewForm(FlaskForm):
+  content = TextAreaField('Write a review', validators=[DataRequired()])
+  submit = SubmitField('Post review')
 
 
 
