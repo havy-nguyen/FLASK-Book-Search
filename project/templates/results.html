@@ -94,9 +94,9 @@
       <ul style="padding-left: 160px;" class="pt-4">
         {% if books %}
           {% for book in books %}
-          <li>
-          <h5><a href="{{ url_for('book', id=book.id) }}">{{ book.title }}</a></h5><h6>(by {{ book.author }})</h6><br>
-          </li>
+            <li>
+            <h5><a href="{{ url_for('book', id=book.id) }}">{{ book.title }}</a></h5><h6>(by {{ book.author }})</h6><br>
+            </li>
           {% endfor %}
         {% else %}
           <h5 class="text-muted">-- no matches --</h5>

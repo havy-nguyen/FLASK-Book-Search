@@ -70,7 +70,8 @@ def index():
 @login_required
 def book(id):
   book = Book.query.get_or_404(id)
-  reviews = Review.query.join(Book).filter(Book.id == book.id).order_by(Review.id.desc()).all()
+  page = request.args.get('page', 1, type=int)
+  reviews = Review.query.join(Book).filter(Book.id == book.id).order_by(Review.id.desc()).paginate(page=page, per_page=4, error_out=False)
   form = ReviewForm()
   if form.validate_on_submit():
     review = Review(content=form.content.data, reviewer=current_user, book=book) 

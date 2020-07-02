@@ -53,7 +53,8 @@
 
   <div class="container-fluid mt-3">
     <div class="row">
-      <div class="col">
+      <div class="col-1"></div>
+      <div class="col-10">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
@@ -64,6 +65,7 @@
             {% endif %}
         {% endwith %}
       </div>
+      <div class="col-1"></div>
     </div>
   </div>
 
@@ -103,19 +105,33 @@
     <div class="col"></div>
     <div class="col-8">
       <!-- -----REVIEW------- -->
-      {% for review in reviews %}
+      {% for review in reviews.items %}
       <div class="mb-3">
         <div class="card-body review_content">
           <div class="review_head pl-4 pt-1">
             {{ review.reviewer.username }}:
           </div>
-          <blockquote class="blockquote mb-0 pt-3">
+          <blockquote class="blockquote mb-0 pt-3" style="font-size: 15px;">
             <p>{{ review.content }}</p>
             <footer class="blockquote-footer"><small class="text-muted"><cite title="Source Title">Reviewed on: {{ review.date.strftime('%d-%m-%Y') }}</cite></small></footer>
           </blockquote>
         </div>
       </div>
       {% endfor %}
+
+      <div class="text-center">
+        {% for page_num in reviews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+            {% if reviews.page == page_num %}
+              <a class="btn btn-secondary btn-sm mb-4" href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+              <a class="btn btn-outline-secondary btn-sm mb-4" href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
+      </div>
       <!-- --------REVIEW-------- -->
     </div>
     <div class="col"></div>
