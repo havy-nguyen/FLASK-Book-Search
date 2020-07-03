@@ -20,7 +20,7 @@ def register():
     db.session.add(user)
     db.session.commit()
     return redirect(url_for('login'))
-  return render_template("register.html", title="Register Page", form=form)
+  return render_template("register.html", pageTitle="Register Page", form=form)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -35,7 +35,7 @@ def login():
       return redirect(url_for('index'))
     else:
       flash('Login unsuccessful. Please check email and password', 'danger')
-  return render_template('login.html', title='Sign In', form=form)
+  return render_template('login.html', pageTitle='Sign In', form=form)
 
 
 @app.route("/logout")
@@ -52,33 +52,24 @@ def index():
   input_title = str(form.title.data)
   input_author = str(form.author.data)
   page = request.args.get('page', 1, type=int)
-  firstKey = request.args.get("firstKey", input_isbn)
-  secondKey = request.args.get("secondKey", input_title)
-  thirdKey = request.args.get("thirdKey", input_author)
+  isbn = request.args.get("isbn", input_isbn)
+  title = request.args.get("title", input_title)
+  author = request.args.get("author", input_author)
   if form.validate_on_submit():
-    print(input_isbn, input_title, input_author)
     books = Book.query.filter(and_(Book.isbn.like("%" + input_isbn + "%"), 
             Book.title.like("%" + input_title.title() + "%"), 
             Book.author.like("%" + input_author.title() + "%"))).paginate(page=page, per_page=8, error_out=False)
-    return render_template("results.html", title="Search Results", 
-                        books=books, form=form, firstkey=firstKey, secondKey=secondKey, thirdKey=thirdKey)
   else:
-    print("here")
-    firstKey = request.args.get("firstKey", "firstKey")
-    secondKey = request.args.get("secondKey", "secondKey")
-    thirdKey = request.args.get("thirdKey", "thirdKey")
-    print(firstKey, secondKey, thirdKey)
-    books = Book.query.filter(and_(Book.isbn.like("%" + firstKey + "%"), 
-            Book.title.like("%" + secondKey.title() + "%"), 
-            Book.author.like("%" + thirdKey.title() + "%"))).paginate(page=page, per_page=8, error_out=False)
-    return render_template("results.html", title="Search Results", 
-                        books=books, form=form, firstkey=firstKey, secondKey=secondKey, thirdKey=thirdKey)
-  # else:
-  #   books = []
-  #   flash('You must fill in at least one field.', 'danger')
-  #   return render_template("results.html", title="Book Search", books=books, form=form)
-  
+    isbn = request.args.get("isbn", "isbn")
+    title = request.args.get("title", "title")
+    author = request.args.get("author", "author")
+    books = Book.query.filter(and_(Book.isbn.like("%" + isbn + "%"), 
+            Book.title.like("%" + title.title() + "%"), 
+            Book.author.like("%" + author.title() + "%"))).paginate(page=page, per_page=8, error_out=False)
+  return render_template("results.html", pageTitle="Search Results", 
+                        books=books, form=form, isbn=isbn, title=title, author=author)
 
+  
 @app.route("/index/<int:id>",  methods=['GET', 'POST'])
 @login_required
 def book(id):
@@ -92,7 +83,7 @@ def book(id):
     db.session.add(review)
     db.session.commit()
     return redirect(url_for('book', id=book.id))
-  return render_template('book.html', title=book.title, book=book, form=form, reviews=reviews)
+  return render_template('book.html', pageTitle=book.title, book=book, form=form, reviews=reviews)
 
 
 
