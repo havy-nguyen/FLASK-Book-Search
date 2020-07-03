@@ -51,20 +51,33 @@ def index():
   input_isbn = str(form.isbn.data)
   input_title = str(form.title.data)
   input_author = str(form.author.data)
+  page = request.args.get('page', 1, type=int)
+  firstKey = request.args.get("firstKey", input_isbn)
+  secondKey = request.args.get("secondKey", input_title)
+  thirdKey = request.args.get("thirdKey", input_author)
   if form.validate_on_submit():
+    print(input_isbn, input_title, input_author)
     books = Book.query.filter(and_(Book.isbn.like("%" + input_isbn + "%"), 
-                                  Book.title.like("%" + input_title.title() + "%"), 
-                                  Book.author.like("%" + input_author.title() + "%"))).all()
-    if len(books) != 5000:
-      return render_template("results.html", title="Search Results", books=books, form=form)
-    else:
-      books = []
-      flash('You must fill in at least one field.', 'danger')
-      return render_template("results.html", title="Book Search", books=books, form=form)
+            Book.title.like("%" + input_title.title() + "%"), 
+            Book.author.like("%" + input_author.title() + "%"))).paginate(page=page, per_page=8, error_out=False)
+    return render_template("results.html", title="Search Results", 
+                        books=books, form=form, firstkey=firstKey, secondKey=secondKey, thirdKey=thirdKey)
   else:
-    books = Book.query.filter(Book.year > 2016).limit(3).all()
-    return render_template("index.html", title="Book Search", books=books, form=form)
-
+    print("here")
+    firstKey = request.args.get("firstKey", "firstKey")
+    secondKey = request.args.get("secondKey", "secondKey")
+    thirdKey = request.args.get("thirdKey", "thirdKey")
+    print(firstKey, secondKey, thirdKey)
+    books = Book.query.filter(and_(Book.isbn.like("%" + firstKey + "%"), 
+            Book.title.like("%" + secondKey.title() + "%"), 
+            Book.author.like("%" + thirdKey.title() + "%"))).paginate(page=page, per_page=8, error_out=False)
+    return render_template("results.html", title="Search Results", 
+                        books=books, form=form, firstkey=firstKey, secondKey=secondKey, thirdKey=thirdKey)
+  # else:
+  #   books = []
+  #   flash('You must fill in at least one field.', 'danger')
+  #   return render_template("results.html", title="Book Search", books=books, form=form)
+  
 
 @app.route("/index/<int:id>",  methods=['GET', 'POST'])
 @login_required
