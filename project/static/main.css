@@ -22,9 +22,15 @@
 }
 
 .flash_box {
-  background-color: rgb(165, 182, 201);
+  background-color: rgb(204, 216, 230);
   border-color: rgb(248, 174, 37) ;
   border-radius: 6px;
+}
+
+.flash_text_success {
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: rgb(40, 64, 124);
 }
 
 .bar {

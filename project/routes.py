@@ -81,7 +81,7 @@ def book(id):
   form = ReviewForm()
   if form.validate_on_submit():
     review = Review(content=form.content.data, reviewer=current_user, book=book) 
-    flash("Your review has been added", 'danger')
+    flash("Your review has been added.", 'info')
     db.session.add(review)
     db.session.commit()
     return redirect(url_for('book', id=book.id))
