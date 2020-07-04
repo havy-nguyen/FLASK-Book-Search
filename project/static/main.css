@@ -64,4 +64,38 @@
   background-color: rgb(241, 241, 240);
 }
 
+.rating {
+  overflow: hidden;
+  display: table;
+  font-size: 18px;
+  color: #2c347e;
+  font-style: normal;
+}
 
+.rating-star {
+  padding: 0 5px;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+  float: right;
+}
+
+.rating-star:after {
+  position: relative;
+  font-family: FontAwesome;
+  content: '\f006';
+}
+
+.rating-star.checked ~ .rating-star:after,
+.rating-star.checked:after {
+  content: '\f005';
+}
+
+.rating:hover .rating-star:after {
+  content: '\f006';
+}
+
+.rating-star:hover ~ .rating-star:after,
+.rating-star:hover:after {
+  content: '\f005' !important;
+}

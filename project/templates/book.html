@@ -78,6 +78,17 @@
       <fieldset class="form-group mt-5">
         <legend class="border-bottom mb-4 head_font">Like this book?</legend>
         <div class="form-group">
+          <form>
+            <div class="rating float-right">
+              <i class="rating-star" data-rating="5" data-target="rate"></i>
+              <i class="rating-star" data-rating="4" data-target="rate"></i>
+              <i class="rating-star" data-rating="3" data-target="rate"></i>
+              <i class="rating-star" data-rating="2" data-target="rate"></i>
+              <i class="rating-star" data-rating="1" data-target="rate"></i>
+            </div>
+          </form>
+        </div>
+        <div class="form-group">
             {{ form.content.label(class="form-control-label") }}
             {% if form.content.errors %}
               {{ form.content(class="form-control form-control-md is-invalid") }}
@@ -108,6 +119,15 @@
       {% for review in reviews.items %}
       <div class="mb-3">
         <div class="card-body review_content">
+          <form>
+            <div>
+              <i class="rating-star" data-rating="5" data-target="."></i>
+              <i class="rating-star" data-rating="4" data-target="."></i>
+              <i class="rating-star" data-rating="3" data-target="."></i>
+              <i class="rating-star" data-rating="2" data-target="."></i>
+              <i class="rating-star" data-rating="1" data-target="."></i>
+            </div>
+          </form>
           <div class="review_head pl-4 pt-1">
             {{ review.reviewer.username }}:
           </div>

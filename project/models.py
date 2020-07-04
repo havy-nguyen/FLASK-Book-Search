@@ -36,8 +36,9 @@ class Review(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    rate = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey("book.id"), nullable=False)
 
     def __repr__(self):
-        return f"Review('{self.content}', '{self.date}')" 
+        return f"Review('{self.content}', '{self.date}', '{self.rate}')" 
