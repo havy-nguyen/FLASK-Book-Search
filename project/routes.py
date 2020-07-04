@@ -48,25 +48,23 @@ def logout():
 @login_required
 def index():
   form = SearchForm()
-  input_isbn = str(form.isbn.data)
-  input_title = str(form.title.data)
-  input_author = str(form.author.data)
   if form.validate_on_submit():
-    print("first")
-    print(input_isbn, input_title, input_author)
+    input_isbn = str(form.isbn.data)
+    input_title = str(form.title.data)
+    input_author = str(form.author.data)
+    isbn = request.args.get("isbn", input_isbn)
+    title = request.args.get("title", input_title)
+    author = request.args.get("author", input_author)
     books = Book.query.filter(and_(Book.isbn.like("%" + input_isbn + "%"), 
             Book.title.like("%" + input_title.title() + "%"), 
             Book.author.like("%" + input_author.title() + "%"))).paginate(page=1, per_page=8, error_out=False)
-    print("here")
     return render_template("index.html", pageTitle="Search Results", 
-                          books=books, form=form, page=2, isbn=input_isbn, title=input_title, author=input_author)
+                          books=books, form=form, isbn=input_isbn, title=input_title, author=input_author)
   else:
     page = request.args.get('page', 2, type=int)
     isbn = request.args.get("isbn", "isbn")
     title = request.args.get("title", "title")
     author = request.args.get("author", "author")
-    print("second")
-    print(isbn, title, author)
     books = Book.query.filter(and_(Book.isbn.like("%" + isbn + "%"), 
             Book.title.like("%" + title.title() + "%"), 
             Book.author.like("%" + author.title() + "%"))).paginate(page=page, per_page=8, error_out=False)
