@@ -25,27 +25,27 @@ Each one has an ISBN number, a title, an author, and a publication year.
 ##### Search 
 ```bash
 Once a user has logged in, they can search for a book. 
-Users should be able to type in the ISBN number of a book, the title of a book, or the author of a book.
+Users can type in the ISBN number of a book, the title of a book, or the author of a book.
 After performing the search, a list of possible matching results is displayed. 
 Users can type in only part of a title, ISBN, or author name.
 ```
 
 ##### Book Page 
 ```bash
-When clicking on a book from the results of the search page, users are taken to a book page. 
+From the results of the search page, users are taken to a book page. 
 Details about the book: 
 - Its title, author. 
 - Publication year. 
 - ISBN number. 
 - Any reviews and rating that users have left. 
 
-Users are be able to submit a review as a text component for each book together with a rating scale.
+Users are be able to submit a review for each book together with a rating scale.
 (1 to 5 stars)
 ```
 
 ##### Goodreads Review Data 
 ```bash
-The average rating and number of ratings from Goodreads are also displayed on each book page.
+Average rating and number of ratings from Goodreads are displayed on each book page.
 ```
 
 ##### API Access 
