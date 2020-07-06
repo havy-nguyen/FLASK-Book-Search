@@ -3,9 +3,10 @@
 {% block banner %}
   <div class="container-fluid pt-2 pb-2 bar">
     <div class="row">
-      <div class="col-md-11">
+      <div class="col-md-10">
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
+        <span class="border-right pt-2 name">{{ current_user.username }}</span> &nbsp;
         <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
       </div>
     </div>
@@ -77,8 +78,20 @@
         {{ form.hidden_tag() }}
       <fieldset class="form-group mt-5">
         <legend class="border-bottom mb-4 head_font">Like this book?</legend>
+        <div class="form-group" style="display: none">
+          {{ form.rate.label(class="form-control-label") }}
+          {% if form.rate.errors %}
+            {{ form.rate(class="form-control form-control-md is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.rate.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.rate(class="form-control form-control-md") }}
+          {% endif %}
+      </div>
         <div class="form-group">
-          <form>
             <div class="rating float-right">
               <i class="rating-star" data-rating="5" data-target="rate"></i>
               <i class="rating-star" data-rating="4" data-target="rate"></i>
@@ -86,7 +99,6 @@
               <i class="rating-star" data-rating="2" data-target="rate"></i>
               <i class="rating-star" data-rating="1" data-target="rate"></i>
             </div>
-          </form>
         </div>
         <div class="form-group">
             {{ form.content.label(class="form-control-label") }}
@@ -119,15 +131,11 @@
       {% for review in reviews.items %}
       <div class="mb-3">
         <div class="card-body review_content">
-          <form>
             <div>
-              <i class="rating-star" data-rating="5" data-target="."></i>
-              <i class="rating-star" data-rating="4" data-target="."></i>
-              <i class="rating-star" data-rating="3" data-target="."></i>
-              <i class="rating-star" data-rating="2" data-target="."></i>
-              <i class="rating-star" data-rating="1" data-target="."></i>
+              {% for rate in range(review.rate) %}
+                <i class="rating-star rating checked"></i>
+              {% endfor %}
             </div>
-          </form>
           <div class="review_head pl-4 pt-1">
             {{ review.reviewer.username }}:
           </div>
@@ -140,21 +148,17 @@
       {% endfor %}
 
       <div class="text-center">
-        {% if reviews.items|length > 3 %}
-          {% for page_num in reviews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-            {% if page_num %}
-              {% if reviews.page == page_num %}
-                <a class="btn btn-secondary btn-sm mb-4" href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
-              {% else %}
-                <a class="btn btn-outline-secondary btn-sm mb-4" href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
-              {% endif %}
+        {% for page_num in reviews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+            {% if reviews.page == page_num %}
+              <a class="btn btn-secondary btn-sm mb-4" href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
             {% else %}
-              ...
+              <a class="btn btn-outline-secondary btn-sm mb-4" href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
             {% endif %}
-          {% endfor %}
-        {% else %}
-        <p></p>
-        {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
       </div>
       <!-- --------REVIEW-------- -->
     </div>

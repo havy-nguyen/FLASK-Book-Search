@@ -50,6 +50,22 @@
   bottom: 0;
 }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+
+.name {
+  padding: 7px;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  vertical-align: middle;
+  color:  rgb(44, 90, 143);
+}
+
 .review_head {
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 5px;
@@ -68,7 +84,7 @@
   overflow: hidden;
   display: table;
   font-size: 18px;
-  color: #2c347e;
+  color: #929296e8;
   font-style: normal;
 }
 

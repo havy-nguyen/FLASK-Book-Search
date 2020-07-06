@@ -3,9 +3,10 @@
 {% block banner %}
   <div class="container-fluid pt-2 pb-2 bar">
     <div class="row">
-      <div class="col-md-11">
+      <div class="col-md-10">
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
+        <span class="border-right pt-2 name">{{ current_user.username }}</span> &nbsp;
         <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
       </div>
     </div>
@@ -14,6 +15,7 @@
 
 {% block blogContent %}
 <div class="container mt-4 mb-5">
+  <img src="{{ url_for('static', filename='booksearch.png') }}" class="center" alt="..">
   <div class="row">
     <div class="col border-left border-right box_color pb-2 pt-3 rounded">
       <form method="POST" action="">
@@ -102,21 +104,17 @@
             <h5><a href="{{ url_for('book', id=book.id) }}">{{ book.title }}</a></h5><h6>(by {{ book.author }})</h6><br>
             </li>
           {% endfor %}
-          {% if books.items|length >= 8 %}
-            {% for page_num in books.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-            {% if page_num %}
-              {% if books.page == page_num %}
-                <a class="btn btn-secondary btn-sm mb-4 mt-3 text-center" href="{{ url_for('index', page=page, isbn=isbn, title=title, author=author) }}">{{ page_num }}</a>
-              {% else %}
-                <a class="btn btn-outline-secondary btn-sm mb-4 mt-3 text-center" href="{{ url_for('index', page=page, isbn=isbn, title=title, author=author) }}">{{ page_num }}</a>
-              {% endif %}
+          {% for page_num in books.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+            {% if books.page == page_num %}
+              <a class="btn btn-secondary btn-sm mb-4 mt-3" href="{{ url_for('index', page=page, isbn=isbn, title=title, author=author) }}">{{ page_num }}</a>
             {% else %}
-              ...
+              <a class="btn btn-outline-secondary btn-sm mb-4 mt-3" href="{{ url_for('index', page=page, isbn=isbn, title=title, author=author) }}">{{ page_num }}</a>
             {% endif %}
-            {% endfor %}
           {% else %}
-          <p></p>
+            ...
           {% endif %}
+          {% endfor %}
         </ul>
       {% else %}
       <div class="text-center">

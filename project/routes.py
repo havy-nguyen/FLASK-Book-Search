@@ -79,12 +79,15 @@ def book(id):
   page = request.args.get('page', 1, type=int)
   reviews = Review.query.join(Book).filter(Book.id == book.id).order_by(Review.id.desc()).paginate(page=page, per_page=4, error_out=False)
   form = ReviewForm()
-  if form.validate_on_submit():
-    review = Review(content=form.content.data, reviewer=current_user, book=book) 
-    flash("Your review has been added.", 'info')
-    db.session.add(review)
-    db.session.commit()
-    return redirect(url_for('book', id=book.id))
+  if form.is_submitted():
+    review = Review(content=form.content.data, rate=form.rate.data, reviewer=current_user, book=book) 
+    if form.validate_on_submit():
+      flash("Your review has been added.", 'info')
+      db.session.add(review)
+      db.session.commit()
+      return redirect(url_for('book', id=book.id))
+    else:
+      flash("Please also rate book.", 'info')
   return render_template('book.html', pageTitle=book.title, book=book, form=form, reviews=reviews)
 
 

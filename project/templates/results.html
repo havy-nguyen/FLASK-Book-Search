@@ -3,17 +3,19 @@
 {% block banner %}
   <div class="container-fluid pt-2 pb-2 bar">
     <div class="row">
-      <div class="col-md-11">
+      <div class="col-md-10">
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
+        <span class="border-right pt-2 name">{{ current_user.username }}</span> &nbsp;
         <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
       </div>
     </div>
   </div>
-{% endblock %}
-
-{% block blogContent %}
-<div class="container mt-4 mb-5">
+  {% endblock %}
+  
+  {% block blogContent %}
+  <div class="container mt-4 mb-5">
+  <img src="{{ url_for('static', filename='booksearch.png') }}" class="center" alt="..">
   <div class="row">
     <div class="col border-left border-right box_color pb-2 pt-3 rounded">
       <form method="POST" action="">

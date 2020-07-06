@@ -47,7 +47,7 @@ class SearchForm(FlaskForm):
 
 class ReviewForm(FlaskForm):
   content = TextAreaField('Write a review', validators=[DataRequired()])
-  rate = RadioField("Rate book", choices=[("1","rate"),("2","rate"),("3","rate"),("4","rate"),("5","rate")])
+  rate = RadioField("Rate book", validators=[DataRequired()], choices=[("1","rate"),("2","rate"),("3","rate"),("4","rate"),("5","rate")])
   submit = SubmitField('Post review')
 
 
