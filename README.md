@@ -17,8 +17,8 @@ Logged in users should be able to log out of the site.
 ```
 
 ##### Import books 
+[CSV file of 5000 different books.](https://github.com/havy-nguyen/csv-to-postgresql).
 ```bash
-[CSV file of 5000 different books.](https://github.com/havy-nguyen/csv-to-postgresql). 
 Each one has an ISBN number, a title, an author, and a publication year. 
 ```
 
