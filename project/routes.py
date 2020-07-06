@@ -5,7 +5,7 @@ from project.models import User, Book, Review
 from flask_sqlalchemy import SQLAlchemy
 from project import app, db, bcrypt
 from sqlalchemy import and_
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/", methods=['GET', 'POST'])
@@ -78,6 +78,11 @@ def book(id):
   book = Book.query.get_or_404(id)
   page = request.args.get('page', 1, type=int)
   reviews = Review.query.join(Book).filter(Book.id == book.id).order_by(Review.id.desc()).paginate(page=page, per_page=4, error_out=False)
+  res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "vfTYhqGEGd0ajlUm2JQ8A", "isbns": book.isbn})
+  goodreads_json = res.json()
+  goodreads_ratings = goodreads_json['books'][0]['work_ratings_count']
+  goodreads_avg = goodreads_json['books'][0]['average_rating']
+  print(goodreads_avg, goodreads_ratings)
   form = ReviewForm()
   if form.is_submitted():
     review = Review(content=form.content.data, rate=form.rate.data, reviewer=current_user, book=book) 
@@ -88,8 +93,33 @@ def book(id):
       return redirect(url_for('book', id=book.id))
     else:
       flash("Please also rate book.", 'info')
-  return render_template('book.html', pageTitle=book.title, book=book, form=form, reviews=reviews)
+  return render_template('book.html', pageTitle=book.title, book=book, form=form, 
+            reviews=reviews, goodreads_ratings=goodreads_ratings, goodreads_avg=goodreads_avg)
 
+
+@app.route("/index/api/<isbn>",  methods=['GET', 'POST'])
+def book_api(isbn):
+  book = Book.query.filter(Book.isbn == isbn).first()
+  if book is None:
+    return jsonify({"Error": "Invalid Isbn"}), 422
+  total_rating = 0
+  for review in book.reviews:
+    total_rating += review.rate
+  try:
+    avg_rating = round(total_rating / int(len(book.reviews)),2)
+    return jsonify({"title": book.title,
+                    "author": book.author,
+                    "year": book.year,
+                    "isbn": book.isbn,
+                    "review_count": total_rating,
+                    "average_score": avg_rating})
+  except ZeroDivisionError:
+    return jsonify({"title": book.title,
+                    "author": book.author,
+                    "year": book.year,
+                    "isbn": book.isbn,
+                    "review_count": "no rating",
+                    "average_score": "no rating"})
 
 
 

@@ -43,3 +43,4 @@ from project import routes
 # goodread key: vfTYhqGEGd0ajlUm2JQ8A
 # goodread secret: CvaXaTGKgjtGT5SindIjfdlFYGT8kaqTZwfe5pNq7I
 # request = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "vfTYhqGEGd0ajlUm2JQ8A", "isbns": "9781632168146"})
+# print(request.json())
