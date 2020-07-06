@@ -60,7 +60,7 @@ A JSON response contains:
 - Average review score.
 ```
 ###### JSON format example
-```python
+```bash
 {
     "title": "The Dark Is Rising",
     "author": "Susan Cooper",
