@@ -70,3 +70,31 @@ A JSON response contains:
     "average_score": 5.0
 }
 ```
+
+### Installation
+
+##### Install requirements.txt
+```python
+pip3 install -r requirements.txt
+```
+
+##### Set environment variables
+Set DATABASE_URL to be the URI of your database
+```python
+export DATABASE_URL="your-URI"
+```
+Set GOODREADS_KEY to be your key to accesss Goodreads API.
+```python
+export GOODREADS_KEY="Goodreads-api-key"
+```
+
+##### Start the application
+```python 
+python3 application.py
+```
+
+
+
+
+
+
