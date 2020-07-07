@@ -73,17 +73,18 @@ A JSON response contains:
 
 ### Installation
 
+
 ##### Install requirements.txt
 ```python
 pip3 install -r requirements.txt
 ```
 
-##### Set environment variables
-Set DATABASE_URL to be the URI of your database
+##### Set DATABASE_URL to be the URI of your database
 ```python
 export DATABASE_URL="your-URI"
 ```
-Set GOODREADS_KEY to be your key to accesss Goodreads API.
+
+##### Set GOODREADS_KEY to be your key to accesss Goodreads API.
 ```python
 export GOODREADS_KEY="Goodreads-api-key"
 ```
@@ -94,6 +95,7 @@ python3 application.py
 ```
 
 
+![image](https://drive.google.com/uc?export=view&id=1_jhlPzj7UJQvw1MaHMeqzmbVKBdz4ncV)
 
 
 
