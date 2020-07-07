@@ -55,9 +55,9 @@ def index():
     isbn = request.args.get("isbn", input_isbn)
     title = request.args.get("title", input_title)
     author = request.args.get("author", input_author)
-    books = Book.query.filter(and_(Book.isbn.like("%" + input_isbn + "%"), 
-            Book.title.like("%" + input_title.title() + "%"), 
-            Book.author.like("%" + input_author.title() + "%"))).paginate(page=1, per_page=8, error_out=False)
+    books = Book.query.filter(and_(Book.isbn.like("%" + input_isbn.strip() + "%"), 
+            Book.title.like("%" + input_title.title().strip() + "%"), 
+            Book.author.like("%" + input_author.title().strip() + "%"))).paginate(page=1, per_page=8, error_out=False)
     return render_template("index.html", pageTitle="Search Results", 
                           books=books, form=form, isbn=input_isbn, title=input_title, author=input_author)
   else:
@@ -65,9 +65,9 @@ def index():
     isbn = request.args.get("isbn", "isbn")
     title = request.args.get("title", "title")
     author = request.args.get("author", "author")
-    books = Book.query.filter(and_(Book.isbn.like("%" + isbn + "%"), 
-            Book.title.like("%" + title.title() + "%"), 
-            Book.author.like("%" + author.title() + "%"))).paginate(page=page, per_page=8, error_out=False)
+    books = Book.query.filter(and_(Book.isbn.like("%" + isbn.strip() + "%"), 
+            Book.title.like("%" + title.title().strip() + "%"), 
+            Book.author.like("%" + author.title().strip() + "%"))).paginate(page=page, per_page=8, error_out=False)
     return render_template("results.html", pageTitle="Search Results", 
                         books=books, form=form, isbn=isbn, title=title, author=author)
 
@@ -78,11 +78,10 @@ def book(id):
   book = Book.query.get_or_404(id)
   page = request.args.get('page', 1, type=int)
   reviews = Review.query.join(Book).filter(Book.id == book.id).order_by(Review.id.desc()).paginate(page=page, per_page=4, error_out=False)
-  res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "vfTYhqGEGd0ajlUm2JQ8A", "isbns": book.isbn})
+  res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": os.environ.get('GOODREADS_KEY'), "isbns": book.isbn})
   goodreads_json = res.json()
   goodreads_ratings = goodreads_json['books'][0]['work_ratings_count']
   goodreads_avg = goodreads_json['books'][0]['average_rating']
-  print(goodreads_avg, goodreads_ratings)
   form = ReviewForm()
   if form.is_submitted():
     review = Review(content=form.content.data, rate=form.rate.data, reviewer=current_user, book=book) 
@@ -120,10 +119,3 @@ def book_api(isbn):
                     "isbn": book.isbn,
                     "review_count": "no rating",
                     "average_score": "no rating"})
-
-
-
-
-
-
-

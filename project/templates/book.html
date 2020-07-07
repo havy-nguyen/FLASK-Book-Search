@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
 
 {% block banner %}
-  <div class="container-fluid pt-2 pb-2 bar">
-    <div class="row">
-      <div class="col-md-10">
-      </div>
-      <div class="col-md-2">
-        <span class="border-right pt-2 name">{{ current_user.username }}</span> &nbsp;
-        <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
-      </div>
+<div class="container-fluid pt-2 pb-2 bar">
+  <div class="row">
+    <div class="col-md-10">
+    </div>
+    <div class="col-md-2">
+      <span class="border-right pt-2 name">{{ current_user.username }}</span> &nbsp;
+      <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
     </div>
   </div>
+</div>
 {% endblock %}
 
 {% block blogContent %}
@@ -22,8 +22,10 @@
         <img src="{{ url_for('static', filename='book.png') }}" class="card-img-top" alt="..." width="200" height="60">
         <div class="card-body">
           <div class="media">
-            <img src="{{ url_for('static', filename='picture.png') }}" class="align-self-center mr-3" alt="..." width="180">
-            <div class="media-body" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            <img src="{{ url_for('static', filename='picture.png') }}" class="align-self-center mr-3" alt="..."
+              width="180">
+            <div class="media-body"
+              style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
               <h2 class="mt-2 mb-3 pt-3 border-bottom" style="padding-left: 30px;">{{ book.title }}</h2>
               <div class="container mt-5 pb-2">
                 <div class="row">
@@ -47,10 +49,13 @@
           </div>
         </div>
         <div class="card mt-3">
-          <h4 class="card pt-3 pl-3 pb-2" style="font-family: fantasy; background-color: rgb(216, 229, 245);">Goodreads Rating</h4>
+          <h4 class="card pt-3 pl-3 pb-2" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, sans-serif; background-color: rgb(216, 229, 245);">Goodreads
+            Rating</h4>
           <div class="container mt-2">
-            <p>Number of ratings: &nbsp; <span style="font-weight: bold; color:  rgb(44, 90, 143)">{{ goodreads_ratings }}</span></p>
-            <p>Average score: &nbsp; <span style="font-weight: bold; color:  rgb(44, 90, 143)">{{ goodreads_avg }}</span></p>
+            <p>Number of ratings: &nbsp; <span
+                style="font-weight: bold; color:  rgb(44, 90, 143)">{{ goodreads_ratings }}</span></p>
+            <p>Average score: &nbsp; <span
+                style="font-weight: bold; color:  rgb(44, 90, 143)">{{ goodreads_avg }}</span></p>
           </div>
         </div>
       </div>
@@ -64,13 +69,13 @@
       <div class="col-1"></div>
       <div class="col-10">
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }} flash_box flash_text_success rounded">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} flash_box flash_text_success rounded">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
       </div>
       <div class="col-1"></div>
@@ -83,22 +88,22 @@
       <!-- ------FORM---------- -->
       <form method="POST" action="">
         {{ form.hidden_tag() }}
-      <fieldset class="form-group mt-5">
-        <legend class="border-bottom mb-4 head_font">Like this book?</legend>
-        <div class="form-group" style="display: none">
-          {{ form.rate.label(class="form-control-label") }}
-          {% if form.rate.errors %}
+        <fieldset class="form-group mt-5">
+          <legend class="border-bottom mb-4 head_font">Like this book?</legend>
+          <div class="form-group" style="display: none">
+            {{ form.rate.label(class="form-control-label") }}
+            {% if form.rate.errors %}
             {{ form.rate(class="form-control form-control-md is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.rate.errors %}
-                <span>{{ error }}</span>
+              <span>{{ error }}</span>
               {% endfor %}
             </div>
-          {% else %}
+            {% else %}
             {{ form.rate(class="form-control form-control-md") }}
-          {% endif %}
-      </div>
-        <div class="form-group">
+            {% endif %}
+          </div>
+          <div class="form-group">
             <div class="rating float-right">
               <i class="rating-star" data-rating="5" data-target="rate"></i>
               <i class="rating-star" data-rating="4" data-target="rate"></i>
@@ -106,74 +111,77 @@
               <i class="rating-star" data-rating="2" data-target="rate"></i>
               <i class="rating-star" data-rating="1" data-target="rate"></i>
             </div>
-        </div>
-        <div class="form-group">
+          </div>
+          <div class="form-group">
             {{ form.content.label(class="form-control-label") }}
             {% if form.content.errors %}
-              {{ form.content(class="form-control form-control-md is-invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.content.errors %}
-                  <span>{{ error }}</span>
-                {% endfor %}
-              </div>
+            {{ form.content(class="form-control form-control-md is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.content.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
             {% else %}
-              {{ form.content(class="form-control form-control-md") }}
+            {{ form.content(class="form-control form-control-md") }}
             {% endif %}
-        </div>
-        <div class="form-group">
-          {{ form.submit(class="btn btn-outline-secondary button_color") }}
-        </div>
-      </fieldset>
+          </div>
+          <div class="form-group">
+            {{ form.submit(class="btn btn-outline-secondary button_color") }}
+          </div>
+        </fieldset>
       </form>
       <!-- ---------FORM----------- -->
     </div>
     <div class="col"></div>
   </div>
-  </div>
+</div>
 
-  <div class="row mt-5 mb-5">
-    <div class="col"></div>
-    <div class="col-8">
-      <!-- -----REVIEW------- -->
-      {% for review in reviews.items %}
-      <div class="mb-3">
-        <div class="card-body review_content">
-            <div>
-              {% for rate in range(review.rate) %}
-                <i class="rating-star rating checked"></i>
-              {% endfor %}
-            </div>
-          <div class="review_head pl-4 pt-1">
-            {{ review.reviewer.username }}:
-          </div>
-          <blockquote class="blockquote mb-0 pt-3" style="font-size: 15px;">
-            <p>{{ review.content }}</p>
-            <footer class="blockquote-footer"><small class="text-muted"><cite title="Source Title">Reviewed on: {{ review.date.strftime('%d-%m-%Y') }}</cite></small></footer>
-          </blockquote>
+<div class="row mt-5 mb-5">
+  <div class="col"></div>
+  <div class="col-8">
+    <!-- -----REVIEW------- -->
+    {% for review in reviews.items %}
+    <div class="mb-3">
+      <div class="card-body review_content">
+        <div>
+          {% for rate in range(review.rate) %}
+          <i class="rating-star rating checked"></i>
+          {% endfor %}
         </div>
+        <div class="review_head pl-4 pt-1">
+          {{ review.reviewer.username }}:
+        </div>
+        <blockquote class="blockquote mb-0 pt-3" style="font-size: 15px;">
+          <p>{{ review.content }}</p>
+          <footer class="blockquote-footer"><small class="text-muted"><cite title="Source Title">Reviewed on:
+                {{ review.date.strftime('%d-%m-%Y') }}</cite></small></footer>
+        </blockquote>
       </div>
-      {% endfor %}
-
-      <div class="text-center">
-        {% for page_num in reviews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-          {% if page_num %}
-            {% if reviews.page == page_num %}
-              <a class="btn btn-secondary btn-sm mb-4" href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
-            {% else %}
-              <a class="btn btn-outline-secondary btn-sm mb-4" href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
-            {% endif %}
-          {% else %}
-            ...
-          {% endif %}
-        {% endfor %}
-      </div>
-      <!-- --------REVIEW-------- -->
     </div>
-    <div class="col"></div>
+    {% endfor %}
+
+    <div class="text-center">
+      {% for page_num in reviews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+      {% if reviews.page == page_num %}
+      <a class="btn btn-secondary btn-sm mb-4"
+        href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+      <a class="btn btn-outline-secondary btn-sm mb-4"
+        href="{{ url_for('book', id=book.id, page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+      {% else %}
+      ...
+      {% endif %}
+      {% endfor %}
+    </div>
+    <!-- --------REVIEW-------- -->
   </div>
+  <div class="col"></div>
+</div>
 </div>
 {% endblock blogContent %}
-          
+
 
 {% block bottom %}
 <div class="container-fluid pt-2 pb-2 button_color footer">

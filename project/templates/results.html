@@ -1,73 +1,73 @@
 {% extends "layout.html" %}
 
 {% block banner %}
-  <div class="container-fluid pt-2 pb-2 bar">
-    <div class="row">
-      <div class="col-md-10">
-      </div>
-      <div class="col-md-2">
-        <span class="border-right pt-2 name">{{ current_user.username }}</span> &nbsp;
-        <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
-      </div>
+<div class="container-fluid pt-2 pb-2 bar">
+  <div class="row">
+    <div class="col-md-10">
+    </div>
+    <div class="col-md-2">
+      <span class="border-right pt-2 name">{{ current_user.username }}</span> &nbsp;
+      <a href="{{ url_for('logout') }}" class="btn button_color" role="button">Sign Out</a>
     </div>
   </div>
-  {% endblock %}
-  
-  {% block blogContent %}
-  <div class="container mt-4 mb-5">
+</div>
+{% endblock %}
+
+{% block blogContent %}
+<div class="container mt-4 mb-5">
   <img src="{{ url_for('static', filename='booksearch.png') }}" class="center" alt="..">
   <div class="row">
     <div class="col border-left border-right box_color pb-2 pt-3 rounded">
       <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group container">
-            <legend class="border-bottom mb-3 head_font">Search book</legend>
-            <div class="row">
+          <legend class="border-bottom mb-3 head_font">Search book</legend>
+          <div class="row">
             <div class="col form-group">
-                {{ form.isbn.label(class="form-control-label") }}
-                {% if form.isbn.errors %}
-                  {{ form.isbn(class="form-control form-control-md is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form.isbn.errors %}
-                      <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                {% else %}
-                  {{ form.isbn(class="form-control form-control-md") }}
-                {% endif %}
+              {{ form.isbn.label(class="form-control-label") }}
+              {% if form.isbn.errors %}
+              {{ form.isbn(class="form-control form-control-md is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.isbn.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %}
+              {{ form.isbn(class="form-control form-control-md") }}
+              {% endif %}
             </div>
             <div class="col form-group">
-                {{ form.title.label(class="form-control-label") }}
-                {% if form.title.errors %}
-                  {{ form.title(class="form-control form-control-md is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form.title.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                {% else %}
-                  {{ form.title(class="form-control form-control-md") }}
-                {% endif %}
+              {{ form.title.label(class="form-control-label") }}
+              {% if form.title.errors %}
+              {{ form.title(class="form-control form-control-md is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.title.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %}
+              {{ form.title(class="form-control form-control-md") }}
+              {% endif %}
             </div>
             <div class="col form-group">
               {{ form.author.label(class="form-control-label") }}
               {% if form.author.errors %}
-                {{ form.author(class="form-control form-control-md is-invalid") }}
-                <div class="invalid-feedback">
-                  {% for error in form.author.errors %}
-                      <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
+              {{ form.author(class="form-control form-control-md is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.author.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
               {% else %}
-                {{ form.author(class="form-control form-control-md") }}
+              {{ form.author(class="form-control form-control-md") }}
               {% endif %}
+            </div>
           </div>
+        </fieldset>
+        <div class="col form-group">
+          {{ form.submit(class="btn btn-outline-secondary button_color") }}
         </div>
-      </fieldset>
-          <div class="col form-group">
-                {{ form.submit(class="btn btn-outline-secondary button_color") }}
-          </div>
-    </form>
+      </form>
     </div>
   </div>
 </div>
@@ -76,13 +76,13 @@
   <div class="row">
     <div class="col">
       {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }} flash_box flash_text rounded">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }} flash_box flash_text rounded">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
       {% endwith %}
     </div>
   </div>
@@ -93,29 +93,32 @@
     <div class="col-md-3"></div>
     <div class="col-md-6 border mt-4 pt-2 pb-2 mb-4 result">
       {% if books.items %}
-        <h4 class="border-bottom mb-4 pt-3">Matches found:</h4>
+      <h4 class="border-bottom mb-4 pt-3">Matches found:</h4>
       {% else %}
-        <p></p>
+      <p></p>
       {% endif %}
       {% if books.items %}
-        <ul style="padding-left: 160px;" class="pt-4">
-          {% for book in books.items %}
-            <li>
-            <h5><a href="{{ url_for('book', id=book.id) }}">{{ book.title }}</a></h5><h6>(by {{ book.author }})</h6><br>
-            </li>
-          {% endfor %}
-          {% for page_num in books.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-          {% if page_num %}
-            {% if books.page == page_num %}
-              <a class="btn btn-secondary btn-sm mb-4 mt-3 text-center" href="{{ url_for('index', page=page_num, isbn=isbn, title=title, author=author) }}">{{ page_num }}</a>
-            {% else %}
-              <a class="btn btn-outline-secondary btn-sm mb-4 mt-3 text-center" href="{{ url_for('index', page=page_num, isbn=isbn, title=title, author=author) }}">{{ page_num }}</a>
-            {% endif %}
-          {% else %}
-            ...
-          {% endif %}
-          {% endfor %}
-        </ul>
+      <ul style="padding-left: 160px;" class="pt-4">
+        {% for book in books.items %}
+        <li>
+          <h5><a href="{{ url_for('book', id=book.id) }}">{{ book.title }}</a></h5>
+          <h6>(by {{ book.author }})</h6><br>
+        </li>
+        {% endfor %}
+        {% for page_num in books.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        {% if books.page == page_num %}
+        <a class="btn btn-secondary btn-sm mb-4 mt-3 text-center"
+          href="{{ url_for('index', page=page_num, isbn=isbn, title=title, author=author) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-secondary btn-sm mb-4 mt-3 text-center"
+          href="{{ url_for('index', page=page_num, isbn=isbn, title=title, author=author) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+      </ul>
       {% else %}
       <div class="text-center">
         <h5 class="text-muted">What's your favourite book?</h5>
@@ -134,4 +137,3 @@
   <div style="width:500px; height:50px;"></div>
 </div>
 {% endblock %}
-

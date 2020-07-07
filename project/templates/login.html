@@ -9,13 +9,13 @@
   <div class="row">
     <div class="col">
       {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }} flash_box flash_text rounded">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }} flash_box flash_text rounded">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
       {% endwith %}
     </div>
   </div>
@@ -29,49 +29,49 @@
       <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4 head_font">Sign In</legend>
-            <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
-                {% if form.email.errors %}
-                  {{ form.email(class="form-control form-control-md is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form.email.errors %}
-                      <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                {% else %}
-                  {{ form.email(class="form-control form-control-md") }}
-                {% endif %}
+          <legend class="border-bottom mb-4 head_font">Sign In</legend>
+          <div class="form-group">
+            {{ form.email.label(class="form-control-label") }}
+            {% if form.email.errors %}
+            {{ form.email(class="form-control form-control-md is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
             </div>
-            <div class="form-group">
-                {{ form.password.label(class="form-control-label") }}
-                {% if form.password.errors %}
-                  {{ form.password(class="form-control form-control-md is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form.password.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                {% else %}
-                  {{ form.password(class="form-control form-control-md") }}
-                {% endif %}
+            {% else %}
+            {{ form.email(class="form-control form-control-md") }}
+            {% endif %}
+          </div>
+          <div class="form-group">
+            {{ form.password.label(class="form-control-label") }}
+            {% if form.password.errors %}
+            {{ form.password(class="form-control form-control-md is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.password.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
             </div>
-            <div class="form-check">
-                {{ form.remember(class="form-check-input") }}
-                {{ form.remember.label(class="form-check-label") }}
-            </div>
+            {% else %}
+            {{ form.password(class="form-control form-control-md") }}
+            {% endif %}
+          </div>
+          <div class="form-check">
+            {{ form.remember(class="form-check-input") }}
+            {{ form.remember.label(class="form-check-label") }}
+          </div>
         </fieldset>
         <div class="form-group">
           {{ form.submit(class="btn btn-outline-secondary button_color") }}
         </div>
         <small class="text-muted">
-            <a href="#">Forgot Password?</a>
+          <a href="#">Forgot Password?</a>
         </small><br>
         <small class="text-muted border-top pt-1">
           Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Register Now</a>
-      </small>
-    </form>
-    
+        </small>
+      </form>
+
     </div>
     <div class="col align-self-end">
     </div>
@@ -84,4 +84,3 @@
   <div style="width:500px; height:50px;"></div>
 </div>
 {% endblock %}
-
