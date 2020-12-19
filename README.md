@@ -94,8 +94,6 @@ export GOODREADS_KEY="Goodreads-api-key"
 python3 application.py
 ```
 
-#### Demo: https://youtu.be/0urWUx9jL04
-
 ![image](https://drive.google.com/uc?export=view&id=1_jhlPzj7UJQvw1MaHMeqzmbVKBdz4ncV)
 
 
